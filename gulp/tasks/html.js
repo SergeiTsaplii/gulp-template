@@ -24,7 +24,7 @@ function html(isBuild, serverInstance) {
     }))
     .pipe(replace(
       /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
-					'$1./$4$5$7$1'
+					'$1$4$5$7$1'
     ))
     .pipe(gulpIf(isBuild, replace('.css', '.min.css')))
     .pipe(gulpIf(isBuild, replace('.js', '.min.js')))
