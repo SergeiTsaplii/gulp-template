@@ -21,14 +21,14 @@ function scss(isBuild, serverInstance) {
     .pipe(gulpIf(isBuild, postcss(postCssConfig)))
     .pipe(
       replace(
-        /(['"]?)(\.\.\/)+(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
-        '$1$2$3$4$6$1'
-      )
+        /(['"]?)(\.\.\/)+(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\\/'"]+(\/))?([^'"]*)\1/gi,
+        '$1$2$3$4$6$1',
+      ),
     )
     .pipe(gulpIf(isBuild, cleanCss({ level: 2 })))
     .pipe(gulpIf(isBuild, rename({ suffix: '.min' })))
     .pipe(dest(config.dest.css, { sourcemaps: '.' }))
     .pipe(serverInstance.stream());
-};
+}
 
 export default scss;

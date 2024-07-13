@@ -17,14 +17,12 @@ function html(isBuild, serverInstance) {
     .pipe(plumber(plumberNotify))
     .pipe(fileinclude({
       prefix: '@',
-      basepath: '@file'
+      basepath: '@file',
     }))
-    .pipe(replace(/<img(?:.|\n|\r)*?>/g, function(match) {
-				return match.replace(/\r?\n|\r/g, '').replace(/\s{2,}/g, ' ');
-    }))
+    .pipe(replace(/<img(?:.|\n|\r)*?>/g, (match) => match.replace(/\r?\n|\r/g, '').replace(/\s{2,}/g, ' ')))
     .pipe(replace(
-      /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\/'"]+(\/))?([^'"]*)\1/gi,
-					'$1$4$5$7$1'
+      /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\\/'"]+(\/))?([^'"]*)\1/gi,
+      '$1$4$5$7$1',
     ))
     .pipe(gulpIf(isBuild, replace('.css', '.min.css')))
     .pipe(gulpIf(isBuild, replace('.js', '.min.js')))
@@ -44,20 +42,18 @@ function html(isBuild, serverInstance) {
       },
     }))
     .pipe(prettier({
-        printWidth: 182,
-				trailingComma: 'es5',
-				bracketSpacing: false,
+      printWidth: 182,
+      trailingComma: 'es5',
+      bracketSpacing: false,
     }))
     .pipe(htmlmin({
       useShortDoctype: true,
       sortClassName: true,
       removeComments: isBuild,
-
-      /**Раскомментировать если требуется минификация html */
       collapseWhitespace: isBuild,
     }))
     .pipe(dest(`${config.dest.html}`))
     .pipe(serverInstance.stream());
-};
+}
 
 export default html;
