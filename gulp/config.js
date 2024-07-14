@@ -1,3 +1,6 @@
+import * as nodePath from 'path';
+
+const rootFolder = nodePath.basename(nodePath.resolve());
 const srcPath = 'src';
 const destPath = 'dist';
 
@@ -11,7 +14,7 @@ const config = {
     sprites: `${srcPath}/assets/icons`,
     fonts: `${srcPath}/assets/fonts`,
     favicons: `${srcPath}/assets/favicons`,
-    resources: `${srcPath}/assets/resources`
+    resources: `${srcPath}/assets/resources`,
   },
   dest: {
     root: destPath,
@@ -22,8 +25,9 @@ const config = {
     sprites: `${destPath}/images/sprites`,
     fonts: `${destPath}/fonts`,
     favicons: `${destPath}/images/favicons`,
-    resources: `${destPath}/resources`
-  }
+    resources: `${destPath}/resources`,
+  },
+  rootFolder,
 };
 
 export default config;
