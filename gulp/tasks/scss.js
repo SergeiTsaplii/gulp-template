@@ -16,7 +16,7 @@ const sass = gulpSass(dartSass);
 
 function scss(isBuild, serverInstance) {
   return src(`${config.src.scss}/*.scss`, { sourcemaps: !isBuild })
-    .pipe(plumber(plumberNotify))
+    .pipe(plumber(plumberNotify('STYLES')))
     .pipe(sass({ includePaths: ['node_modules'] }))
     .pipe(gulpIf(isBuild, postcss(postCssConfig)))
     .pipe(

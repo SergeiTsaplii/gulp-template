@@ -14,7 +14,7 @@ const { src, dest } = pkg;
 
 function html(isBuild, serverInstance) {
   return src(`${config.src.html}/*.html`)
-    .pipe(plumber(plumberNotify))
+    .pipe(plumber(plumberNotify('HTML')))
     .pipe(fileinclude({
       prefix: '@',
       basepath: '@file',
