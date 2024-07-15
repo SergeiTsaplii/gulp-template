@@ -14,6 +14,7 @@ import { font, fontStyle } from './gulp/tasks/fonts.js';
 import favicons from './gulp/tasks/favicons.js';
 import resources from './gulp/tasks/resources.js';
 import cacheTask from './gulp/tasks/cache.js';
+import rewrite from './gulp/tasks/rewrite.js';
 
 const { parallel, series, watch } = pkg;
 const isBuild = process.argv.includes('--build');
@@ -58,7 +59,7 @@ const build = series(
   parallel(handleHTML, handleSCSS, handleJS, handleImages, handleAvif, handleWebp),
 );
 
-const cache = series(cacheTask);
+const cache = series(cacheTask, rewrite);
 
 export default dev;
 

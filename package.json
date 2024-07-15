@@ -39,6 +39,7 @@
     "gulp-replace": "^1.1.4",
     "gulp-rev": "^11.0.0",
     "gulp-rev-delete-original": "^0.2.3",
+    "gulp-rev-rewrite": "^6.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-svg-sprite": "^2.0.3",
     "gulp-ttf2woff2": "^4.0.1",
