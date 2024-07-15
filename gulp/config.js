@@ -11,9 +11,9 @@ const config = {
     scss: `${srcPath}/scss`,
     js: `${srcPath}/js`,
     images: `${srcPath}/images`,
-    sprites: `${srcPath}/icons`,
+    sprites: `${srcPath}/images/sprites`,
     fonts: `${srcPath}/fonts`,
-    favicons: `${srcPath}/favicons`,
+    favicons: `${srcPath}/images/favicons`,
     resources: `${srcPath}/resources`,
   },
   dest: {

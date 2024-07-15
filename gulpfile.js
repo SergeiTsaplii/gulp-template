@@ -9,6 +9,7 @@ import js from './gulp/tasks/js.js';
 import images from './gulp/tasks/images.js';
 import avif from './gulp/tasks/avif.js';
 import webp from './gulp/tasks/webp.js';
+import sprites from './gulp/tasks/sprites.js';
 
 const { parallel, series, watch } = pkg;
 const isBuild = process.argv.includes('--build');
@@ -20,6 +21,7 @@ const handleJS = js.bind(null, !isBuild, browserSyncInstance);
 const handleImages = images.bind(null, isBuild, browserSyncInstance);
 const handleAvif = avif.bind(null, isBuild, browserSyncInstance);
 const handleWebp = webp.bind(null, isBuild, browserSyncInstance);
+const handleSprites = sprites.bind(null, isBuild, browserSyncInstance);
 
 function watcher() {
   watch(`${config.src.html}/**/*.html`, handleHTML);
@@ -28,11 +30,12 @@ function watcher() {
   watch(`${config.src.images}/**/**.{jpg,jpeg,png,svg}`, handleImages);
   watch(`${config.src.images}/**/**.{jpg,jpeg,png}`, handleAvif);
   watch(`${config.src.images}/**/**.{jpg,jpeg,png}`, handleWebp);
+  watch(`${config.src.sprites}/**/**.svg`, handleSprites);
 }
 
 const dev = series(
   clean,
-  parallel(handleHTML, handleSCSS, handleJS, handleImages, handleAvif, handleWebp),
+  parallel(handleHTML, handleSCSS, handleJS, handleImages, handleAvif, handleWebp, handleSprites),
   parallel(watcher, handleServer),
 );
 const build = series(

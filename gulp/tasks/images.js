@@ -11,7 +11,11 @@ import plumberNotify from './notify.js';
 const { src, dest } = pkg;
 
 function images(isBuild, serverInstance) {
-  return src(`${config.src.images}/**/**.{jpg,jpeg,png,svg}`, { encoding: false })
+  return src([
+    `${config.src.images}/**/**.{jpg,jpeg,png,svg}`,
+    `!${config.src.sprites}`,
+    `!${config.src.favicons}`,
+  ], { encoding: false })
     .pipe(plumber(plumberNotify('IMAGES')))
     .pipe(newer(config.dest.images))
     .pipe(gulpIf(isBuild, imagemin([
