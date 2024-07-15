@@ -12,6 +12,7 @@ import webp from './gulp/tasks/webp.js';
 import sprites from './gulp/tasks/sprites.js';
 import { font, fontStyle } from './gulp/tasks/fonts.js';
 import favicons from './gulp/tasks/favicons.js';
+import resources from './gulp/tasks/resources.js';
 
 const { parallel, series, watch } = pkg;
 const isBuild = process.argv.includes('--build');
@@ -33,6 +34,7 @@ function watcher() {
   watch(`${config.src.images}/**/**.{jpg,jpeg,png}`, handleAvif);
   watch(`${config.src.images}/**/**.{jpg,jpeg,png}`, handleWebp);
   watch(`${config.src.sprites}/**/**.svg`, handleSprites);
+  watch(`${config.src.resources}/**`, resources);
 }
 
 const dev = series(
@@ -47,6 +49,7 @@ const dev = series(
   font,
   fontStyle,
   favicons,
+  resources,
   parallel(watcher, handleServer),
 );
 const build = series(
