@@ -11,6 +11,7 @@ import avif from './gulp/tasks/avif.js';
 import webp from './gulp/tasks/webp.js';
 import sprites from './gulp/tasks/sprites.js';
 import { font, fontStyle } from './gulp/tasks/fonts.js';
+import favicons from './gulp/tasks/favicons.js';
 
 const { parallel, series, watch } = pkg;
 const isBuild = process.argv.includes('--build');
@@ -45,6 +46,7 @@ const dev = series(
   handleSprites,
   font,
   fontStyle,
+  favicons,
   parallel(watcher, handleServer),
 );
 const build = series(
