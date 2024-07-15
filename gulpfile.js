@@ -10,6 +10,7 @@ import images from './gulp/tasks/images.js';
 import avif from './gulp/tasks/avif.js';
 import webp from './gulp/tasks/webp.js';
 import sprites from './gulp/tasks/sprites.js';
+import { font, fontStyle } from './gulp/tasks/fonts.js';
 
 const { parallel, series, watch } = pkg;
 const isBuild = process.argv.includes('--build');
@@ -35,7 +36,15 @@ function watcher() {
 
 const dev = series(
   clean,
-  parallel(handleHTML, handleSCSS, handleJS, handleImages, handleAvif, handleWebp, handleSprites),
+  handleHTML,
+  handleSCSS,
+  handleJS,
+  handleImages,
+  handleAvif,
+  handleWebp,
+  handleSprites,
+  font,
+  fontStyle,
   parallel(watcher, handleServer),
 );
 const build = series(
