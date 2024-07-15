@@ -15,6 +15,7 @@ import favicons from './gulp/tasks/favicons.js';
 import resources from './gulp/tasks/resources.js';
 import cacheTask from './gulp/tasks/cache.js';
 import rewrite from './gulp/tasks/rewrite.js';
+import zipFiles from './gulp/tasks/zip.js';
 
 const { parallel, series, watch } = pkg;
 const isBuild = process.argv.includes('--build');
@@ -60,7 +61,8 @@ const build = series(
 );
 
 const cache = series(cacheTask, rewrite);
+const zip = zipFiles;
 
 export default dev;
 
-export { build, cache };
+export { build, cache, zip };
