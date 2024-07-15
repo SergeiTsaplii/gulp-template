@@ -38,6 +38,8 @@
     "gulp-sass": "^5.1.0",
     "gulp-typograf": "^4.1.0",
     "husky": "^9.0.11",
+    "imagemin-avif": "^0.1.6",
+    "imagemin-webp": "^8.0.0",
     "lint-staged": "^15.2.7",
     "postcss": "^8.4.39",
     "postcss-preset-env": "^9.6.0",

@@ -1,27 +1,8 @@
-import promises from 'fs';
-import { resolve, join, extname } from 'path';
+import { resolve, join } from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
+import readDir from './gulp/tasks/dir.js';
 
 // eslint-disable-next-line consistent-return
-async function readDir(directoryPath) {
-  const result = {};
-  try {
-    const files = await promises.readdir(directoryPath);
-    // Фильтрация файлов с расширением .js
-    const jsFiles = files.filter((file) => extname(file) === '.js');
-    // Вывод найденных .js файлов
-    console.log('JS файлы в директории: ', jsFiles);
-
-    jsFiles.forEach((file) => {
-      const [name] = file.split('.');
-      result[name] = `./${file}`;
-    });
-
-    return result;
-  } catch (err) {
-    console.error('Ошибка чтения директории:', err);
-  }
-}
 
 const webpackConfig = async (isMode) => {
   const paths = {
