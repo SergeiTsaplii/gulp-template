@@ -16,6 +16,7 @@ import resources from './gulp/tasks/resources.js';
 import cacheTask from './gulp/tasks/cache.js';
 import rewrite from './gulp/tasks/rewrite.js';
 import zipFiles from './gulp/tasks/zip.js';
+import deploy from './gulp/tasks/deploy.js';
 import {
   htmlBackend,
   stylesBackend,
@@ -83,11 +84,27 @@ const build = series(
   parallel(handleHTML, handleSCSS, handleJS, handleImages, handleAvif, handleWebp),
 );
 
+const deployFTP = series(
+  clean,
+  handleHTML,
+  handleSCSS,
+  handleJS,
+  handleImages,
+  handleAvif,
+  handleWebp,
+  handleSprites,
+  font,
+  fontStyle,
+  favicons,
+  resources,
+  deploy,
+);
+
 const cache = series(cacheTask, rewrite);
 const zip = zipFiles;
 
 export default dev;
 
 export {
-  build, cache, zip, backend,
+  build, cache, zip, backend, deployFTP,
 };
