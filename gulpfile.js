@@ -16,6 +16,15 @@ import resources from './gulp/tasks/resources.js';
 import cacheTask from './gulp/tasks/cache.js';
 import rewrite from './gulp/tasks/rewrite.js';
 import zipFiles from './gulp/tasks/zip.js';
+import {
+  htmlBackend,
+  stylesBackend,
+  scriptsBackend,
+  imagesBackend,
+  avifBackend,
+  webpBackend,
+  spritesBackend,
+} from './gulp/tasks/backend.js';
 
 const { parallel, series, watch } = pkg;
 const isBuild = process.argv.includes('--build');
@@ -55,6 +64,20 @@ const dev = series(
   resources,
   parallel(watcher, handleServer),
 );
+const backend = series(
+  clean,
+  htmlBackend,
+  stylesBackend,
+  scriptsBackend,
+  imagesBackend,
+  avifBackend,
+  webpBackend,
+  spritesBackend,
+  font,
+  fontStyle,
+  favicons,
+  resources,
+);
 const build = series(
   clean,
   parallel(handleHTML, handleSCSS, handleJS, handleImages, handleAvif, handleWebp),
@@ -65,4 +88,6 @@ const zip = zipFiles;
 
 export default dev;
 
-export { build, cache, zip };
+export {
+  build, cache, zip, backend,
+};
