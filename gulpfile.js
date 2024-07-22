@@ -41,7 +41,7 @@ const handleSprites = sprites.bind(null, isBuild, browserSyncInstance);
 
 function watcher() {
   watch([`${config.src.html}/*.pug`, `${config.src.root}/html/**/*.pug`], handleHTML);
-  watch(`${config.src.scss}/**/*.scss`, handleSCSS);
+  watch([`${config.src.scss}/*.scss`, `${config.src.root}/html/**/*.scss`], handleSCSS);
   watch(`${config.src.js}/**/*.js`, handleJS);
   watch(`${config.src.images}/**/**.{jpg,jpeg,png,svg}`, handleImages);
   watch(`${config.src.images}/**/**.{jpg,jpeg,png}`, handleAvif);
