@@ -7,7 +7,7 @@ const destPath = 'dist';
 const config = {
   src: {
     root: srcPath,
-    html: `${srcPath}/html`,
+    html: `${srcPath}/pages`,
     scss: `${srcPath}/scss`,
     js: `${srcPath}/js`,
     images: `${srcPath}/images`,

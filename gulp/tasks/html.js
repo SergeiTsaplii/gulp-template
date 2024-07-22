@@ -1,6 +1,9 @@
 import pkg from 'gulp';
 import plumber from 'gulp-plumber';
-import fileinclude from 'gulp-file-include';
+import cached from 'gulp-cached';
+import dependents from 'gulp-dependents';
+import filter from 'gulp-filter';
+import pug from 'gulp-pug';
 import replace from 'gulp-replace';
 import typograf from 'gulp-typograf';
 import avifWebpHtml from 'gulp-avif-webp-retina-html';
@@ -13,12 +16,17 @@ import plumberNotify from './notify.js';
 const { src, dest } = pkg;
 
 function html(isBuild, serverInstance) {
-  return src(`${config.src.html}/*.html`)
+  return src(`${config.src.html}/*.pug`)
     .pipe(plumber(plumberNotify('HTML')))
-    .pipe(fileinclude({
-      prefix: '@',
-      basepath: '@file',
+    .pipe(cached('pugCache'))
+    .pipe(dependents({
+      '.pug': {
+        parserSteps: [/^\s*(?:extends|include)\s+(.+?)\s*$/gm],
+        postfixes: ['.pug', '.jade'],
+      },
     }))
+    .pipe(filter(`${config.src.html}/*.pug`))
+    .pipe(pug({ pretty: true }))
     .pipe(replace(/<img(?:.|\n|\r)*?>/g, (match) => match.replace(/\r?\n|\r/g, '').replace(/\s{2,}/g, ' ')))
     .pipe(replace(
       /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\\/'"]+(\/))?([^'"]*)\1/gi,
