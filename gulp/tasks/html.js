@@ -1,4 +1,7 @@
+/* eslint-disable no-shadow */
 import pkg from 'gulp';
+import fs from 'fs';
+import path from 'path';
 import plumber from 'gulp-plumber';
 import cached from 'gulp-cached';
 import dependents from 'gulp-dependents';
@@ -14,6 +17,24 @@ import config from '../config.js';
 import plumberNotify from './notify.js';
 
 const { src, dest } = pkg;
+const data = {};
+const dir = `${config.src.root}/html/data/`;
+
+try {
+  const modules = fs.readdirSync(dir);
+  modules.forEach((item) => {
+    const module = path.join(dir, item);
+    if (!fs.lstatSync(module).isDirectory()) return;
+    const jsons = fs.readdirSync(module).filter((item) => path.extname(item) === '.json');
+    jsons.forEach((json) => {
+      const name = path.basename(json, path.extname(json));
+      const file = path.join(dir, item, json);
+      data[name] = JSON.parse(fs.readFileSync(file));
+    });
+  });
+} catch (e) {
+  console.log(e);
+}
 
 function html(isBuild, serverInstance) {
   return src(`${config.src.html}/*.pug`)
@@ -26,7 +47,7 @@ function html(isBuild, serverInstance) {
       },
     }))
     .pipe(filter(`${config.src.html}/*.pug`))
-    .pipe(pug({ pretty: true }))
+    .pipe(pug({ pretty: isBuild, locals: { jsons: data } }))
     .pipe(replace(/<img(?:.|\n|\r)*?>/g, (match) => match.replace(/\r?\n|\r/g, '').replace(/\s{2,}/g, ' ')))
     .pipe(replace(
       /(?<=src=|href=|srcset=)(['"])(\.(\.)?\/)*(img|images|fonts|css|scss|sass|js|files|audio|video)(\/[^\\/'"]+(\/))?([^'"]*)\1/gi,
